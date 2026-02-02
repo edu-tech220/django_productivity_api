@@ -25,5 +25,11 @@ class LoginView(APIView):
         return Response({
             "token": token.key,
             "user_id": user.id,
-            "username": user.username
+            "username": user.username,
+            "password": user.password
         })
+
+class TestApi(APIView):
+    # permission_classes = [AllowAny
+    def get(self, request):
+        return Response({"message": "Acceso autorizado"})
