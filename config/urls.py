@@ -22,3 +22,6 @@ urlpatterns = [
     path("api/accounts/", include("accounts.urls"))
     
 ]
+urlpatterns += [
+    path('api/', include('core.urls')),
+]
