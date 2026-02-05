@@ -5,6 +5,7 @@ from rest_framework.decorators import action
 from core.permissions import IsOwner
 from .models import Project, Task
 from .serializers import ProjectSerializer, TaskSerializer
+from rest_framework.response import Response
 
 class ProjectViewSet(viewsets.ModelViewSet):
     serializer_class = ProjectSerializer
@@ -39,14 +40,14 @@ class TaskViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
     def get_queryset(self):
-        queryset = Task.objects.filter(owner=self.request.user)
+        queryset = Task.objects.filter(
+            owner=self.request.user,
+            is_active=True
+        )
         status = self.request.query_params.get('status')
         if status:
-          queryset = queryset.filter(status=status)
-        return Project.objects.filter(
-        owner=self.request.user,
-        is_active=True
-    )
+            queryset = queryset.filter(status=status)
+        return queryset
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
