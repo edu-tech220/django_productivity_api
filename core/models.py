@@ -9,7 +9,8 @@ class Project(models.Model):
 
     def __str__(self):
         return self.name
-
+    
+    is_active = models.BooleanField(default=True)
 
 class Task(models.Model):
     STATUS_CHOICES = (
@@ -28,3 +29,4 @@ class Task(models.Model):
 
     def __str__(self):
         return self.title
+    is_active = models.BooleanField(default=True)
